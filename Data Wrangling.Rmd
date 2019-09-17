@@ -1,0 +1,46 @@
+---
+title: "Data_Wrangling"
+author: "Kylie Wheelock Riley"
+date: "9/17/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+#Load in Litters Dataset
+
+```{r}
+
+# Can check working directory with code below, do not want to use this. Want to use relative path. 
+getwd()
+
+##relative path is ./data/FAS_litters.csv
+
+litters_data = read_csv(file = "./data/FAS_litters.csv")
+##After import view data and check columns/ rows view(var_name)
+
+litters_data = janitor::clean_names(litters_data)
+## This will clean up the names, make all lowercase/snake case
+```
+
+Load in Pups Dataset
+```{r}
+##reading in pup dataset
+
+pups_data = read_csv(file = "./data/FAS_pups.csv")
+view(pups_data)
+
+##clean data names
+pups_data = janitor::clean_names(pups_data)
+```
+
+```{r}
+##skim gives data summaries
+```
+
