@@ -74,3 +74,29 @@ filter(litters_data, pups_born_alive >= 4, pups_born_alive <= 6)
 drop_na(litters_data, gd0_weight)
 ```
 
+## Mutate
+
+```{r}
+##mutate changes variables
+##creates a variable of the difference in weight between gd0 and gd18, also changes column name to lowercase
+mutate(
+  litters_data, 
+  wt_gain = gd18_weight - gd0_weight,
+  group = str_to_lower(group))
+
+
+```
+
+
+## Arrange
+
+```{r}
+##usually used for viewing data/ double checking
+arrange(litters_data, pups_born_alive)
+
+arrange(litters_data, desc(pups_born_alive))
+
+##arranging on 2 different things
+arrange(litters_data, pups_born_alive, gd0_weight)
+```
+
