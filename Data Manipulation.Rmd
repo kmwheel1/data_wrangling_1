@@ -10,22 +10,38 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
-## R Markdown
+## Import datasets
+```{r}
+litters_data = read_csv(file = "./data/FAS_litters.csv")
+litters_data = janitor::clean_names(litters_data)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+pups_data = read_csv(file = "./data/FAS_pups.csv")
+pups_data = janitor::clean_names(pups_data)
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
+## Selecting columns/ vars
 
-You can also embed plots, for example:
+```{r}
+select(litters_data, group, litter_number)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+select(litters_data, group, litter_number, gd0_weight)
+
+##Pulls everthing that starts with pups
+select(litters_data, litter_number, gd0_weight, starts_with("pups"))
+
+##rearranges columns so it is littler number, group, then everthing else
+select(litters_data, litter_number, group, gd0_weight)
+
+select(litters_data, litter_number, group, everything())
+
+##if you want the data from column gd0_eright through pups_born_alive
+select(litters_data, litter_number, gd0_weight:pups_born_alive)
+
+##renaming group to GROUP, can use if var names are too descriptive/long
+select(litters_data, GROUP = group, litter_number)
+
+##this just renames without selecting columns
+rename(litters_data, GROUP = group)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
