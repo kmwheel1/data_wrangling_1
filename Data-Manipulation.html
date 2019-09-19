@@ -719,6 +719,45 @@ arrange(litters_data, pups_born_alive, gd0_weight)</code></pre>
 ## # ... with 39 more rows, and 2 more variables: pups_dead_birth &lt;dbl&gt;,
 ## #   pups_survive &lt;dbl&gt;</code></pre>
 </div>
+<div id="pipe" class="section level2">
+<h2>pipe …</h2>
+<p>Create a collection of commands…</p>
+<pre class="r"><code>#hotkey = ctrl + shift + m
+litters_data = 
+  read_csv(&quot;./data/FAS_litters.csv&quot;) %&gt;%  
+  janitor::clean_names() %&gt;% 
+  select(-pups_survive) %&gt;% 
+  mutate(
+    wt_gain = gd18_weight - gd0_weight, 
+    group = str_to_lower(group)) %&gt;% 
+  drop_na(gd0_weight)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Group = col_character(),
+##   `Litter Number` = col_character(),
+##   `GD0 weight` = col_double(),
+##   `GD18 weight` = col_double(),
+##   `GD of Birth` = col_double(),
+##   `Pups born alive` = col_double(),
+##   `Pups dead @ birth` = col_double(),
+##   `Pups survive` = col_double()
+## )</code></pre>
+<pre class="r"><code>litters_data = 
+  read_csv(&quot;./data/FAS_litters.csv&quot;) %&gt;%  
+  janitor::clean_names(dat = .) %&gt;% 
+  select(.data = .,-pups_survive)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   Group = col_character(),
+##   `Litter Number` = col_character(),
+##   `GD0 weight` = col_double(),
+##   `GD18 weight` = col_double(),
+##   `GD of Birth` = col_double(),
+##   `Pups born alive` = col_double(),
+##   `Pups dead @ birth` = col_double(),
+##   `Pups survive` = col_double()
+## )</code></pre>
+</div>
 
 
 
