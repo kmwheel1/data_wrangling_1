@@ -20,7 +20,7 @@ library(tidyverse)
 # Can check working directory with code below, do not want to use this. Want to use relative path. 
 getwd()
 
-##relative path is ./data/FAS_litters.csv
+##relative path is ./data/FAS_litters.csv, the end of the absolute path
 
 litters_data = read_csv(file = "./data/FAS_litters.csv")
 ##After import view data and check columns/ rows view(var_name)
@@ -40,7 +40,20 @@ view(pups_data)
 pups_data = janitor::clean_names(pups_data)
 ```
 
+AFTER CLASS CHECK SKIM & COLUMN CHANGES FOR litter_data and pups_data
 ```{r}
 ##skim gives data summaries
 ```
 
+Import an excel file
+```{r}
+library(readxl)
+mlb11_data = read_excel(path = "./data/mlb11.xlsx")
+```
+
+Read in SAS AFTER CLASS REVIEW HOW TO DO THIS
+```{r}
+pulse_data = haven::read_sas
+```
+
+EXPORT DATA, CHECK HOW TO DO THIS AFTER CLASS
