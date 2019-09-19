@@ -20,7 +20,7 @@ pups_data = janitor::clean_names(pups_data)
 
 ```
 
-## Selecting columns/ vars
+## Selecting columns/ vars to use in analysis
 
 ```{r}
 select(litters_data, group, litter_number)
@@ -43,5 +43,34 @@ select(litters_data, GROUP = group, litter_number)
 
 ##this just renames without selecting columns
 rename(litters_data, GROUP = group)
+```
+
+
+## Filtering!
+
+```{r}
+##when this is true keep that row, only keeps the Con 7 group
+filter(litters_data, group == "Con7")
+
+filter(litters_data, group == "Mod8")
+
+##Showing only pups with a gestation of 20 days
+filter(litters_data, gd_of_birth == 20)
+
+##gestational daya less than 20
+filter(litters_data, gd_of_birth < 20)
+
+##looking for pups born alive < 6 and those in group Con7
+filter(litters_data, pups_born_alive < 6, group == "Con7")
+
+##greater than or = to 4 pups or greater than = to 6
+filter(litters_data, pups_born_alive >= 4, pups_born_alive <= 6)
+
+##What todo about missing values 
+##DONT DO THIS
+###filter(litters_data, !is.na(gd0_weight))
+
+##DO THIS INSTEAD
+drop_na(litters_data, gd0_weight)
 ```
 
