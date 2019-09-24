@@ -723,6 +723,7 @@ arrange(litters_data, pups_born_alive, gd0_weight)</code></pre>
 <h2>pipe …</h2>
 <p>Create a collection of commands…</p>
 <pre class="r"><code>#hotkey = ctrl + shift + m
+#janior uses .dat, but tidyverse uses .data
 litters_data = 
   read_csv(&quot;./data/FAS_litters.csv&quot;) %&gt;%  
   janitor::clean_names() %&gt;% 

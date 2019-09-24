@@ -106,6 +106,7 @@ Create a collection of commands...
 
 ```{r}
 #hotkey = ctrl + shift + m
+#janior uses .dat, but tidyverse uses .data
 litters_data = 
   read_csv("./data/FAS_litters.csv") %>%  
   janitor::clean_names() %>% 
