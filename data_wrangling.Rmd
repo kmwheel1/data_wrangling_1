@@ -1,0 +1,126 @@
+---
+title: "Data_Wrangling"
+author: "Kylie Wheelock Riley"
+date: "9/17/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Work with Litters Dataset
+
+## Loading in Litters Dataset
+```{r}
+
+# Can check working directory with code below, do not want to use this. Want to use relative path. 
+getwd()
+
+##relative path is ./data/FAS_litters.csv, the end of the absolute path
+
+litters_data = read_csv(file = "./data/FAS_litters.csv")
+##After import view data and check columns/ rows view(var_name)
+
+litters_data = janitor::clean_names(litters_data)
+## This will clean up the names, make all lowercase/snake case
+```
+
+## Viewing data
+```{r}
+##view(litters_data) is a good way to view the data, but you want to only use it in the console, because the output isnt good in an RMD file. 
+
+##skim gives data summaries quick histograms. Good for a quick first look at the data. 
+skimr::skim(litters_data)
+```
+
+## Changing column names/ headings
+```{r}
+##Can use read_* to change columns around
+litters_data = read_csv(file = "./data/FAS_litters.csv",
+  skip = 10, col_names = FALSE)
+
+##Can use the col_types function to assign the variable type to each column
+litters_data = read_csv(file = "./data/FAS_litters.csv",
+  col_types = cols(
+    Group = col_character(),
+    `Litter Number` = col_character(),
+    `GD0 weight` = col_double(),
+    `GD18 weight` = col_double(),
+    `GD of Birth` = col_integer(),
+    `Pups born alive` = col_integer(),
+    `Pups dead @ birth` = col_integer(),
+    `Pups survive` = col_integer()
+  )
+)
+
+##Shortahnd of doing the same thing as above: 
+litters_data = read_csv(file = "./data/FAS_litters.csv",
+  col_types = "ccddiiii"
+)
+```
+
+
+# Learning Assessment 2: do the same steps above for pups dataset
+## Step 1: Load in Pups Dataset
+```{r}
+##reading in pup dataset
+
+pups_data = read_csv(file = "./data/FAS_pups.csv")
+
+##clean data names
+pups_data = janitor::clean_names(pups_data)
+```
+
+## Step 2: Viewing data
+```{r}
+skimr::skim(pups_data)
+```
+
+## Step 3: Changing Column Types/ Headings
+```{r}
+pups_data = read_csv(file = "./data/FAS_pups.csv",
+  skip = 10, col_names = FALSE)
+
+pups_data = read_csv(file = "./data/FAS_pups.csv",
+  col_types = "cdiiii"
+)
+
+```
+
+
+# Importing an excel file
+```{r}
+##use readxl function 
+library(readxl)
+mlb11_data = read_excel(path = "./data/mlb11.xlsx")
+
+##another option
+mlb11_data = read_excel("data/mlb11.xlsx", n_max = 20)
+head(mlb11_data, 5)
+```
+
+# Importing SAS, Stata, and SPSS
+```{r}
+##Use haven package, sxample for SAS dataset
+library(haven)
+pulse_data = read_sas("./data/public_pulse_data.sas7bdat")
+head(pulse_data, 5)
+
+```
+
+# Learning Assessment 2
+```{r}
+##Import the FAS_pups.csv dataset using read.csv. Compare the class of this dataset to the one produced by read_csv. Try printing both in the console – what happens? After cleaning up the names, try accessing the Sex variable using S (e.g., pups_data$S). What happens?
+  
+pups_data = read.csv(file = "./data/FAS_pups.csv")
+#not totally sure what the difference is, but the output looks different 
+
+pups_data = janitor::clean_names(pups_data)
+pups_data$S
+#everything is coded as a 1 or a 2!
+
+#In short, read_csv produces tibbles which are very similar to the base R data frames produced by read.csv. However, tibbles have some features that can help prevent mistakes and unwanted behavior.
+```
+

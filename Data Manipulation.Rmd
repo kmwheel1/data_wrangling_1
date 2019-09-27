@@ -20,8 +20,8 @@ pups_data = janitor::clean_names(pups_data)
 
 ```
 
-## Selecting columns/ vars to use in analysis
-
+## Select
+Choosing the columns/ vars to use in analysis
 ```{r}
 select(litters_data, group, litter_number)
 
@@ -45,9 +45,14 @@ select(litters_data, GROUP = group, litter_number)
 rename(litters_data, GROUP = group)
 ```
 
+## Learning assessment 1 
+In the pups data, select the columns containing litter number, sex, and PD ears.
+```{r}
+select(pups_data, litter_number, sex, pd_ears)
+```
 
-## Filtering!
 
+## Filtering
 ```{r}
 ##when this is true keep that row, only keeps the Con 7 group
 filter(litters_data, group == "Con7")
@@ -74,10 +79,16 @@ filter(litters_data, pups_born_alive >= 4, pups_born_alive <= 6)
 drop_na(litters_data, gd0_weight)
 ```
 
-## Mutate
-
+## Learning Assessment 2
+In the Pups Data, Filter to include only pups with sex 1, Filter to include only pups with PD walk less than 11 and sex 2
 ```{r}
-##mutate changes variables
+filter(pups_data, sex < 2)
+filter(pups_data, pd_walk < 11, sex == 2)
+```
+
+## Mutate
+Used to change or create new columns
+```{r}
 ##creates a variable of the difference in weight between gd0 and gd18, also changes column name to lowercase
 mutate(
   litters_data, 
@@ -87,9 +98,18 @@ mutate(
 
 ```
 
+##Learning Assessment 3
+In the pups data: Create a variable that subtracts 7 from PD pivot, Create a variable that is the sum of all the PD variables
+```{r}
+mutate(
+  pups_data,
+  pivot_week = pd_pivot - 7, 
+  pd_sum = pd_ears + pd_eyes + pd_pivot + pd_walk
+)
+```
 
-## Arrange
 
+## Arrange - arrange the rows in your data according to the values in one or more columns
 ```{r}
 ##usually used for viewing data/ double checking
 arrange(litters_data, pups_born_alive)
@@ -100,13 +120,11 @@ arrange(litters_data, desc(pups_born_alive))
 arrange(litters_data, pups_born_alive, gd0_weight)
 ```
 
-## pipe ...
-
-Create a collection of commands...
-
+## Piping
+Used to create a collection of commands
 ```{r}
 #hotkey = ctrl + shift + m
-#janior uses .dat, but tidyverse uses .data
+#janitor uses .dat, but tidyverse uses .data
 litters_data = 
   read_csv("./data/FAS_litters.csv") %>%  
   janitor::clean_names() %>% 
@@ -120,5 +138,22 @@ litters_data =
   read_csv("./data/FAS_litters.csv") %>%  
   janitor::clean_names(dat = .) %>% 
   select(.data = .,-pups_survive)
+```
+
+## Learning assessment 4
+Write a chain of commands that:
+loads the pups data
+cleans the variable names
+filters the data to include only pups with sex 1
+removes the PD ears variable
+creates a variable that indicates whether PD pivot is 7 or more day
+
+```{r}
+pups_data = 
+  read_csv("./data/FAS_pups.csv") %>%  
+  janitor::clean_names() %>% 
+  filter(sex == 1) %>% 
+  select(-pd_ears) %>% 
+  mutate(pivot_date = pd_pivot >= 7) 
 ```
 
